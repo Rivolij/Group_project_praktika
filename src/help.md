@@ -101,3 +101,15 @@ function changePage(newPage) {
 
 Удаление привязки к старому Git-репозиторию:
 Remove-Item -Recurse -Force .git
+
+
+git add .
+git commit -m "Добавлен base в vite.config.js для GitHub Pages"
+git push
+Затем пересобери проект и заново запушь в ветку gh-pages:
+
+bash
+Копировать
+Редактировать
+npm run build
+npx gh-pages -d dist
