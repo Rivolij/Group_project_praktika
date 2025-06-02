@@ -1,291 +1,108 @@
 <script setup>
+
 </script>
 
+
+
 <template>
-  <header class="showcase">
-    <div class="container">
-      <div class="text-content">
-        <p class="problem-category">Проблема мусора</p>
-        <h1>Решении проблем мусора</h1>
-        <p>
-          Из ежегодных жалоб из разных районов Санкт-Петербурга по загрязнению мусором
-          центрального и спального районов поставило вопрос о наибольшем финансировании
-          мэрией Санкт-Петербурга на финансирование городских служб по устранению загрязнения на улицах.
-          Пожалуйста, сообщайте о проблемах мусора вашего района в наш городской портал.
-        </p>
-        <a href="src\???">Посмотреть</a>
+  <div></div>
+  <div class="main_counter_home"> 
+    <div class="counter_home_title">
+  <p>Сообщите о проблеме с ЖКХ, благоустройством,<br> состояния дорог и другими</p></div>
+  <div >
+  <button class="counter_home_button"> Подать заявку</button></div>
+  <src></src>  
+  </div>
+  <div class="main_counter_panel">
+    <div class="counter_panel">
+      <div class="counter_count">34287</div>  
+      <div class="counter_title">Сообщений поступило</div>
+    </div>
+    <div class="counter_panel">
+      <div class="counter_count">35665</div>
+      <div counter_title>Проблем решено</div>
+    </div>
+    <div class="counter_panel">
+      <div class="counter_count">3453</div>
+      <div counter_title>Принято в работу обращений</div>
+    </div>
+    </div>
+
+
+  <h1>Решенные проблемы</h1>
+   <div class="main_counter_complet">
+    
+    <div class="counet_complet">
+      <div class="counet_complet_img">(я картинка) </div>
+      <div class="counet_complet_title">Разбитые стекла в парадной</div>
+      </div>
+      <div class="counet_complet">
+      <div class="counet_complet_img">(я картинка) </div>
+      <div class="counet_complet_title">Засор мусоропровода</div>
+      </div>
+      <div class="counet_complet">
+      <div class="counet_complet_img">(я картинка) </div>
+      <div class="counet_complet_title">Ямы во дворе</div>
       </div>
     </div>
-  </header>
-
-  <section>
-    <div class="container">
-      <h1 class="editor-h1">Актуальные Новости</h1>
-      <div class="articles">
-        <a href="src\???" class="card">
-          <img src="/img/articles/ent1.jpg" alt="" />
-          <article>
-            <p class="road-category">Ремонт дорог</p>
-            <h1>На 15 октября планируется перекрытие улицы</h1>
-            <p>
-              В связи с ухудшением состояния асфальтового покрытия на улице Ленина,
-              начнется ремонт с 15 октября. Пожалуйста, сообщайте о проблемах.
-            </p>
-          </article>
-        </a>
-
-        <a href="src\???" class="card">
-          <article>
-            <p class="problem-category">Безопасность</p>
-            <h1>Криминал на улицах</h1>
-            <p>
-              В связи с увеличением числа краж в районе Центрального рынка,
-              мы призываем жителей сообщать о подозрительных лицах.
-            </p>
-          </article>
-        </a>
-
-        <a href="src\???" class="card">
-          <img src="/img/articles/greenery1.jpg" alt="" />
-          <article>
-            <p class="green-category">Парки и скверы:</p>
-            <h1>Благоустройства парка</h1>
-            <p>
-              В парке Победы начнется благоустройство. Если вы заметили поврежденные скамейки или дорожки,
-              сообщите нам.
-            </p>
-          </article>
-        </a>
-
-        <a href="src\???" class="card">
-          <article>
-            <p class="problem-category">Водоснабжение</p>
-            <h1>Проблема с перебоями воды</h1>
-            <p>
-              В некоторых районах города наблюдаются перебои с водоснабжением.
-              Пожалуйста, сообщайте о проблемах для оперативного реагирования.
-            </p>
-          </article>
-          <img src="/img/articles/water.jpg" alt="" />
-        </a>
-
-        <a href="src\???" class="card">
-          <img src="/img/articles/greenery2.jpg" alt="" />
-          <article>
-            <p class="green-category">Зеленые насаждения</p>
-            <h1>Нехватка живой природы</h1>
-            <p>
-              В рамках программы по озеленению города мы планируем высадку деревьев.
-              Сообщайте о местах, где не хватает зелени.
-            </p>
-          </article>
-        </a>
-
-        <a href="src\???" class="card">
-          <article>
-            <p class="problem-category">Освещение</p>
-            <h1>Проблема с электричеством</h1>
-            <p>
-              В нескольких районах города зафиксированы проблемы с уличным освещением.
-              Мы призываем жителей сообщать о неработающих фонарях.
-            </p>
-          </article>
-        </a>
-
-        <a href="src\???" class="card">
-          <article>
-            <p class="road-category">Транспорт</p>
-            <h1>Ухудшение общественного транспорта</h1>
-            <p>
-              В связи с увеличением числа жалоб на общественный транспорт,
-              мы запускаем опрос для улучшения качества обслуживания. Ваше мнение важно!
-            </p>
-          </article>
-          <img src="/img/articles/ent2.jpg" alt="" />
-        </a>
-      </div>
-    </div>
-  </section>
+    
+    
 </template>
 
 
 <style scoped>
-/* =====
-SHOWCASE
-===== */
-:root {
-  --headings-font: "Handlee", cursive;
-  --primary-color: rgb(240, 37, 37);
-  --light-grey-color: rgb(243, 243, 243);
-  --dark-color: rgb(46, 46, 46);
-}
-
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
-}
-
-p {
-  line-height: 1.5rem;
-  padding: 0.5rem 0rem;
-}
-
-h1,
-h2,
-h3 {
-  font-family: "Quicksand", sans-serif;
-}
-
-.container {
-  max-width: 1100px;
-  padding: 0px 20px;
-  margin: auto;
-}
-
-body {
-  background-color: var(--light-grey-color);
-}
-
-img {
-  width: 100%;
-}
-
-.problem-category,
-.road-category,
-.green-category {
-  display: inline-block;
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  padding: 2px 20px;
-  border-radius: 50px;
-  color: white;
-  margin: 0.5rem 0rem;
-}
-
-.problem-category {
-  background-color: orange;
-}
-
-.road-category {
-  background-color: rgb(186, 98, 197);
-}
-
-.green-category {
-  background-color: rgb(0, 151, 245);
-}
-
-.showcase {
+.main_counter_home{
   position: relative;
-  color: white;
-  height: 60vh;
-  background: url(images/background.jpg) center center/cover;
+  font-size: 35px;
+}
+.counter_home_button{
+  font-size: 25px;
+  
 }
 
-.showcase::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.showcase .container {
-  height: inherit;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+.main_counter_panel{
+  position: relative;
+  display: flex;
   justify-content: center;
+  margin-left: 70px;
+  margin-right: 70px;
+  margin-top: 30px;
+  font-size: 27px;
+  border: 4px solid black;
+  border-radius: 11px;
+}
+.counter_panel{
+  padding: 50px;
+
 }
 
-.showcase .text-content {
+
+.main_counter_complet{
   position: relative;
-  padding: 0px 30px;
+   display: flex;
+  justify-content: center;
+   margin-left: 70px;
+  margin-right: 70px;
+  font-size: 27px;
+  
+}
+.counet_complet{
+  padding: 50px;
+}
+.counter_home_button{
+background-color: #028AD2 ;
+    border-radius: 11px;
+    color: black;
+    text-decoration: none;
+    
+    text-align: center;
+    font-size: 28px;
+    transition: all 0.3s linear;
+}
+.counter_home_button:hover {
+    
+    background-color: #006194;
+    color: #f3f3f3;
 }
 
-.showcase .text-content h1 {
-  text-transform: uppercase;
-  font-size: 1.6rem;
-  margin: 10px 0px;
-  letter-spacing: 1px;
-  font-family: var(--headings-font);
-}
-
-.showcase .text-content p:nth-child(3) {
-  text-align: justify;
-}
-
-.showcase .text-content a {
-  text-decoration: none;
-  padding: 10px 15px;
-  font-size: 1.05rem;
-  font-weight: 400;
-  display: inline-block;
-  color: white;
-  letter-spacing: 1px;
-  background-color: var(--primary-color);
-  margin-top: 10px;
-}
-
-.showcase .text-content a:hover {
-  background-color: var(--light-grey-color);
-  color: black !important;
-}
-
-
-
-
-
-/* =====
-ARTICLES
-===== */
-
-.editor-h1 {
-  font-size: 1.6rem;
-  margin: 1rem 0rem;
-  letter-spacing: 1px;
-}
-
-.articles {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-}
-
-.articles>a:nth-child(1),
-.articles>a:last-child {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
-  grid-column: 1 / span 2;
-  align-items: center;
-}
-
-.articles>a:last-child {
-  grid-column: 2 / span 2;
-}
-
-.articles>a:nth-child(2) {
-  background-color: var(--dark-color);
-  color: white;
-}
-
-.articles>a:nth-child(6) {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.card {
-  background-color: white;
-  padding: 1rem;
-  text-decoration: none;
-  color: black;
-}
-
-.card:hover {
-  box-shadow: 3px 5px 10px rgb(199, 199, 199);
-}
 </style>
