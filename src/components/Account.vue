@@ -77,8 +77,12 @@ function handleLogout() {
 <template>
   <div class="account-container">
     <template v-if="!isLoggedIn">
+      <div class="soob">
+      <p>Внимание! Чтобы подать заявку, необходимо зарегистрироваться/авторизоваться.</p>
+      </div>
+      <div class="win">
       <h2>Личный кабинет</h2>
-      <p>Авторизуйтесь, чтобы получить доступ к личному кабинету!</p>
+      <p class="subtitle">Авторизуйтесь, чтобы получить доступ к личному кабинету!</p>
 
       <div class="form-toggle-buttons">
         <button :class="{ active: currentForm === 'login' }" @click="setForm('login')">
@@ -88,7 +92,7 @@ function handleLogout() {
           Регистрация
         </button>
       </div>
-
+      </div>
       <LoginForm
         v-if="currentForm === 'login'"
         @login="loginUser"
@@ -110,23 +114,75 @@ function handleLogout() {
   </div>
 </template>
 
-
 <style scoped>
+.win {
+  margin-top: -80px;
+}
+.soob {
+  color: white;
+  background-color: rgb(255, 95, 95);
+  font-size: 18px;
+  padding-left: 15px;
+  width: 200px;
+  border: rgb(255, 79, 79) 2px solid;
+  border-radius: 15px;
+  margin-top: -20px;
+  margin-right: 400px;
+  margin-left: -250px;
+}
+
+.soob:hover {
+  transform: scale(1.3);
+  transition: transform 0.8s;
+}
+.account-container {
+  width: 700px;
+  padding: 20px;
+  background-color: rgba(228, 239, 255, 1);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 180, 216, 0.2);
+  margin-bottom: 70px;
+}
+
+h2 {
+  text-align: center;
+  color: rgba(0, 97, 148, 1);
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  margin-bottom: 20px;
+  color: rgba(0, 97, 148, 1);
+  font-size: 16px;
+}
+
 .form-toggle-buttons {
   display: flex;
+  justify-content: center;
   gap: 10px;
   margin-bottom: 1rem;
 }
 
 .form-toggle-buttons button {
-  padding: 6px 12px;
+  padding: 8px 16px;
   border: none;
-  background: #ccc;
+  border-radius: 8px;
+  background-color: rgba(255, 196, 142, 1);
+  color: rgb(255, 255, 255);
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.form-toggle-buttons button:hover {
+  background-color: rgb(255, 156, 43);
+  color: white;
 }
 
 .form-toggle-buttons button.active {
-  background: #888;
+  background-color: rgb(255, 96, 43);
   color: white;
 }
 </style>
+

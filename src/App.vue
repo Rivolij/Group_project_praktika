@@ -157,11 +157,17 @@ router.beforeEach((to, from, next) => {
     <div class="footer-content">
     <div>
       <h4>Мы в соцсетях</h4>
-        <div class="social-links">
-          <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Bbno%24_Twitchcon_2024.jpg/500px-Bbno%24_Twitchcon_2024.jpg" target="_blank">VK</a>
-          <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Bbno%24_Twitchcon_2024.jpg/500px-Bbno%24_Twitchcon_2024.jpg" target="_blank">Telegram</a>
-          <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Bbno%24_Twitchcon_2024.jpg/500px-Bbno%24_Twitchcon_2024.jpg" target="_blank">YouTube</a>
-        </div>
+<div class="social-links">
+  <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Bbno%24_Twitchcon_2024.jpg/500px-Bbno%24_Twitchcon_2024.jpg" target="_blank" aria-label="VK">
+    <i class="fab fa-vk"></i>
+  </a>
+  <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Bbno%24_Twitchcon_2024.jpg/500px-Bbno%24_Twitchcon_2024.jpg" target="_blank" aria-label="Telegram">
+    <i class="fab fa-telegram"></i>
+  </a>
+  <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Bbno%24_Twitchcon_2024.jpg/500px-Bbno%24_Twitchcon_2024.jpg" target="_blank" aria-label="YouTube">
+    <i class="fab fa-youtube"></i>
+  </a>
+</div>
     </div>
       <div class="footer_text">
         <p>Спасибо что помогаете сделать наш город лучше!</p>
@@ -292,7 +298,7 @@ footer {
   }
 }
 .main {
-  background-color: bisque;
+  background-color: rgba(165, 214, 255, 0.786);
   padding-top: 50px;
   display: flex;
   justify-content: center;
@@ -302,6 +308,7 @@ footer {
 }
 
 .footer-content {
+  padding: 25px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -309,10 +316,20 @@ footer {
 }
 .social-links {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+  align-items: center;
 }
 
+.social-links a {
+  font-size: 36px;
+  color: #ffffff;
+  transition: color 0.3s;
+}
+
+.social-links a:hover {
+  color: #ffb458;
+}
 /* Адаптация под мобилки */
 @media (max-width: 720px) {
   .footer-content {
@@ -328,8 +345,9 @@ footer {
 }
 
 footer {
+  color: white;
   margin-top: auto; /* этот отступ толкает футер вниз */
-  background-color: #4f3f3f;
+  background-color: rgb(108, 165, 222);
   width: 100%;
   text-align: center; /* по центру текст внутри футера */
 }

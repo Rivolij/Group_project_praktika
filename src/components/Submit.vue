@@ -11,6 +11,7 @@ const categories = ['Дороги', 'Освещение', 'Мусор', 'Ван�
 const requests = ref([])
 const errors = ref([])
 const successMessage = ref('')
+const agree = ref(false)
 
 const currentUserId = ref('')
 
@@ -45,6 +46,9 @@ function validateForm() {
   if (category.value === 'Другое' && !otherCategory.value.trim()) {
     errors.value.push('Уточните категорию в поле "Другое"')
   }
+  if (!agree.value) {
+  errors.value.push('Необходимо согласие на обработку данных')
+}
   if (!image.value) {
     errors.value.push('Фото обязательно')
   } else if (!['image/jpeg', 'image/jpg', 'image/png', 'image/bmp'].includes(image.value.type)) {
@@ -122,79 +126,63 @@ const filteredRequests = computed(() => {
     <div class="form">
       <label>Название</label>
       <input type="text" v-model="title" placeholder="Например: Яма на дороге" />
+      <p class="error" v-if="errors.includes('Название обязательно')">Название обязательно</p>
 
       <label>Описание</label>
       <textarea v-model="description" placeholder="Опишите проблему..."></textarea>
+      <p class="error" v-if="errors.includes('Описание обязательно')">Описание обязательно</p>
 
       <label>Категория</label>
       <select v-model="category">
         <option disabled value="">Выберите категорию</option>
         <option v-for="cat in categories" :key="cat" :value="cat">{{ cat }}</option>
       </select>
+      <p class="error" v-if="errors.includes('Категория обязательна')">Категория обязательна</p>
 
       <div v-if="category === 'Другое'">
         <label>Уточните категорию</label>
         <input type="text" v-model="otherCategory" placeholder="Например: Нарушение правил парковки" />
+        <p class="error" v-if="errors.includes('Уточните категорию в поле &quot;Другое&quot;')">Уточните категорию</p>
       </div>
 
       <label>Фото (jpg, png, bmp, до 10Мб)</label>
       <input type="file" accept="image/*" @change="handleImageUpload" />
+      <p class="error" v-if="errors.includes('Фото обязательно')">Фото обязательно</p>
+      <p class="error" v-if="errors.includes('Недопустимый формат изображения')">Недопустимый формат изображения</p>
+      <p class="error" v-if="errors.includes('Максимальный размер фото — 10Мб')">Максимальный размер фото — 10Мб</p>
+
+      <!-- Новый чекбокс -->
+<div class="checkbox-wrapper">
+  <label for="agree" style="display: flex; align-items: center;">
+    <input type="checkbox" id="agree" v-model="agree" style="margin-right: 0; margin: 0; padding: 0;" />
+    <span style="margin-left: 0;">Согласен на обработку персональных данных</span>
+  </label>
+</div>
+<p class="error" v-if="errors.includes('Необходимо согласие на обработку данных')">Необходимо согласие на обработку данных</p>
+
 
       <button class="submit-btn" @click="submitForm">Отправить заявку</button>
 
       <p class="success" v-if="successMessage">{{ successMessage }}</p>
-
-      <ul v-if="errors.length" class="errors">
-        <li v-for="err in errors" :key="err">{{ err }}</li>
-      </ul>
-    </div>
-
-    <div class="filter">
-      <label>Фильтр по статусу:</label>
-      <select v-model="statusFilter">
-        <option>Все</option>
-        <option>Новая</option>
-        <option>Решено</option>
-        <option>Отклонена</option>
-      </select>
-    </div>
-
-    <div class="request-list">
-      <div class="request" v-for="req in filteredRequests" :key="req.id">
-        <img :src="req.imageUrl" alt="Фото" />
-        <h2>{{ req.title }}</h2>
-        <p>{{ req.description }}</p>
-        <p><strong>Категория:</strong> {{ req.category }}</p>
-        <p>
-          <strong>Статус:</strong>
-          <span :class="'status ' + req.status.toLowerCase()">{{ req.status }}</span>
-        </p>
-        <p class="timestamp">Добавлено: {{ req.timestamp }}</p>
-
-        <!-- Модальное окно -->
-<div v-if="showDeleteModal" class="modal-backdrop">
-  <div class="modal">
-    <p>Вы уверены, что хотите удалить заявку?</p>
-    <div class="modal-buttons">
-      <button class="yes-btn" @click="confirmDelete">Да</button>
-      <button class="no-btn" @click="closeModal">Нет</button>
-    </div>
-  </div>
-</div>
-<button
-  class="delete-btn"
-  v-if="req.status === 'Новая' && req.userId === currentUserId"
-  @click="askDeleteConfirmation(req)"
->
-  Удалить заявку
-</button>
-
-      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+
+.checkbox-wrapper label {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  margin-right: 0;
+}
+
+.checkbox-wrapper span {
+  margin-left: 0;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -289,7 +277,7 @@ h1 {
   font-weight: 600;
   margin-top: 10px;
 }
-.errors {
+.error {
   color: red;
   margin-top: 10px;
   list-style: none;
