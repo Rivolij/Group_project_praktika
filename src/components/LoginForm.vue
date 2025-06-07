@@ -6,13 +6,65 @@ const emit = defineEmits(['login'])
 const login = ref('')
 const password = ref('')
 const error = ref('')
+const loginError = ref('')
+const passwordError = ref('')
+const shakeLogin = ref(false)
+const shakePassword = ref(false)
+
+function triggerShake(field) {
+  if (field === 'login') {
+    shakeLogin.value = false
+    setTimeout(() => (shakeLogin.value = true), 0)
+  }
+  if (field === 'password') {
+    shakePassword.value = false
+    setTimeout(() => (shakePassword.value = true), 0)
+  }
+}
 
 function handleLogin() {
+  error.value = ''
+  loginError.value = ''
+  passwordError.value = ''
+
+  let hasError = false
+
+  if (!login.value.trim()) {
+    loginError.value = 'Введите логин'
+    triggerShake('login')
+    hasError = true
+  }
+
+  if (!password.value.trim()) {
+    passwordError.value = 'Введите пароль'
+    triggerShake('password')
+    hasError = true
+  }
+
+  if (hasError) return
+
+  const users = JSON.parse(localStorage.getItem('users')) || []
+  const user = users.find(u => u.login === login.value)
+
+  if (!user) {
+    error.value = 'Такой пользователь не зарегистрирован'
+    triggerShake('login')
+    return
+  }
+
+  if (user.password !== password.value) {
+    error.value = 'Неверный пароль'
+    triggerShake('password')
+    return
+  }
+
+  // Успешный вход
   emit('login', {
     login: login.value,
     password: password.value
   })
 }
+
 </script>
 
 <template>
@@ -20,18 +72,55 @@ function handleLogin() {
     <h2>Вход</h2>
 
     <form @submit.prevent="handleLogin">
-    <label for="login">Логин</label>
-    <input id="login" v-model="login" placeholder="Введите логин" />
+      <label for="login">Логин</label>
+      <input
+        id="login"
+        v-model="login"
+        :class="{ 'error-input': loginError, shake: shakeLogin }"
+        placeholder="Введите логин"
+      />
+      <p v-if="loginError" class="error-message">{{ loginError }}</p>
 
-    <label for="password">Пароль</label>
-    <input id="password" v-model="password" type="password" placeholder="Введите пароль" />
+      <label for="password">Пароль</label>
+      <input
+        id="password"
+        v-model="password"
+        type="password"
+        :class="{ 'error-input': passwordError, shake: shakePassword }"
+        placeholder="Введите пароль"
+      />
+      <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
 
-    <button type="submit">Войти</button>
+      <p v-if="error" class="error-message">{{ error }}</p>
+
+      <button type="submit">Войти</button>
     </form>
   </div>
 </template>
 
 <style scoped>
+.error-input {
+  border-color: red !important;
+}
+
+@keyframes shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-4px); }
+  40%  { transform: translateX(4px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s ease;
+}
+.error-message {
+  color: red;
+  margin: -10px 0 10px;
+  font-size: 14px;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -46,7 +135,7 @@ function handleLogin() {
 form {
   display: flex;
   flex-direction: column;
-  align-items: center;   /* горизонтальное выравнивание */
+  align-items: center;
 }
 form label {
   margin-left: -210px;
@@ -79,7 +168,6 @@ input:focus {
   border-color: rgb(89, 155, 225);
 }
 
-
 button {
   width: 150px;
   padding: 10px;
@@ -94,22 +182,17 @@ button {
 
 button:hover {
   background-color: rgb(255, 156, 43);
-  color: rgb(255, 255, 255);overflow-x: ;
+  color: rgb(255, 255, 255);
 }
 
-/* === чтобы перекрыть цвет инпута автозаплнение === */
+/* === стили для автозаполнения === */
 ::v-deep(input:-webkit-autofill),
 ::v-deep(input:-webkit-autofill:hover),
 ::v-deep(input:-webkit-autofill:focus),
 ::v-deep(input:-webkit-autofill:active) {
-  /* Заполняем фон тем же цветом, что у обычного input */
-  -webkit-box-shadow: 0 0 0 1000px rgb(255, 255, 255) !important; 
-  box-shadow:        0 0 0 1000px rgb(224, 255, 216) inset !important;
-
-  /* Цвет вводимого текста внутри автозаполненного поля */
-  -webkit-text-fill-color: #000 !important;  /* или #097287, если нужен синий */
-
-  /* Небольшой «хак», чтобы фон не мигал */
+  -webkit-box-shadow: 0 0 0 1000px rgb(255, 255, 255) !important;
+  box-shadow: 0 0 0 1000px rgb(224, 255, 216) inset !important;
+  -webkit-text-fill-color: #000 !important;
   transition: background-color 9999s ease-in-out 0s;
 }
 </style>

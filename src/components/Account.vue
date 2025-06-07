@@ -16,7 +16,6 @@ onMounted(() => {
     login: 'admin',
     password: 'adminWSR',
     role: 'admin',
-    name: 'Администратор'
   }
 
   let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]')
@@ -184,5 +183,47 @@ h2 {
   background-color: rgb(255, 96, 43);
   color: white;
 }
+@media (max-width: 480px) {
+  .account-container {
+    width: 90vw;
+    padding: 15px 10px;
+    margin-bottom: 50px;
+    box-shadow: none; /* Чтобы не сильно перегружать маленький экран */
+  }
+
+  .win {
+    margin-top: 0;
+  }
+
+  .soob {
+    width: 100%;
+    margin: 0 0 15px 0;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    border-width: 1.5px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  .form-toggle-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-toggle-buttons button {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+  }
+}
+
 </style>
 

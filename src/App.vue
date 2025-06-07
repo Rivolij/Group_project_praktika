@@ -116,6 +116,20 @@ router.beforeEach((to, from, next) => {
           </template>
         </div>
 
+
+        <template v-if="currentUser && currentUser.role !== 'admin'">
+          <div class="welcome-message">
+            Добро пожаловать, {{ currentUser.firstName }}!
+          </div>
+        </template>
+
+        <template v-if="currentUser?.role === 'admin'">
+          <div class="welcome-message">
+            С возвращением, Администратор!
+          </div>
+        </template>
+
+
         <!-- Иконка аккаунта -->
         <img
           src="/img/icon_1.png"
@@ -188,12 +202,19 @@ router.beforeEach((to, from, next) => {
 </template>
 
 
-
 <style scoped>
+
+.welcome-message {
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-right: -100px;
+  color: #444;
+}
+
 .navbar,
 .main,
 footer {
-  max-width: 1200px;
+  max-width: 1500px;
   width: 100%;    
   margin: 0 auto;    
   padding: 0 16px;
@@ -210,7 +231,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 10px;
+  padding: 10px 70px;
 }
 
 /* Гамбургер */
@@ -285,13 +306,43 @@ footer {
 
 /* Адаптация */
 @media (max-width: 720px) {
+    /* Отступ слева для иконки аккаунта */
+    .account-icon {
+    margin-left: 10px;
+  }
+  .navbar-top {
+    padding: 10px 10px; /* убрать большие отступы */
+  }
+  .welcome-message {
+    display: none; /* убрать приветствие */
+  }
   .menu-buttons {
     display: none;
   }
-
+  footer .footer_text {
+    padding-top: 15px; /* уменьшить большой отступ */
+  }
   .hamburger {
     display: flex;
   }
+  .footer-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  footer h4,
+  footer p {
+    width: 100%;
+    text-align: center;
+  }
+  
+  footer {
+  color: white;
+  margin-top: auto; /* этот отступ толкает футер вниз */
+  background-color: rgb(108, 165, 222);
+  width: 100%;
+  text-align: center; /* по центру текст внутри футера */
+}
 
   .mobile-menu {
     display: flex;
@@ -330,13 +381,7 @@ footer {
 .social-links a:hover {
   color: #ffb458;
 }
-/* Адаптация под мобилки */
-@media (max-width: 720px) {
-  .footer-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
+
 .app-wrapper {
   min-height: 100vh;       /* высота окна браузера */
   display: flex;

@@ -13,29 +13,121 @@ const user = ref({
   confirmPassword: '',
 })
 
-const error = ref('')
 const agreement = ref(false)
+const error = ref('')
+const errors = ref({
+  login: '',
+  lastName: '',
+  firstName: '',
+  middleName: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+})
+
+function isCyrillic(str) {
+  return /^[А-Яа-яЁё\s-]+$/.test(str)
+}
+
+function isLatin(str) {
+  return /^[A-Za-z0-9_]+$/.test(str)
+}
+
+function isValidEmail(str) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str)
+}
+
+function validate() {
+  let valid = true
+  const u = user.value
+  const users = JSON.parse(localStorage.getItem('users') || '[]')
+
+  errors.value = {
+    login: '',
+    lastName: '',
+    firstName: '',
+    middleName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }
+
+  // Логин
+  if (!u.login) {
+    errors.value.login = 'Введите логин'
+    valid = false
+  } else if (!isLatin(u.login)) {
+    errors.value.login = 'Логин должен содержать только латинские буквы и цифры'
+    valid = false
+  } else if (users.find(existing => existing.login === u.login)) {
+    errors.value.login = 'Логин уже занят'
+    valid = false
+  }
+
+  // Фамилия
+  if (!u.lastName) {
+    errors.value.lastName = 'Введите фамилию'
+    valid = false
+  } else if (!isCyrillic(u.lastName)) {
+    errors.value.lastName = 'Фамилия должна быть на кириллице'
+    valid = false
+  }
+
+  // Имя
+  if (!u.firstName) {
+    errors.value.firstName = 'Введите имя'
+    valid = false
+  } else if (!isCyrillic(u.firstName)) {
+    errors.value.firstName = 'Имя должно быть на кириллице'
+    valid = false
+  }
+
+  // Отчество
+  if (!u.middleName) {
+    errors.value.middleName = 'Введите отчество'
+    valid = false
+  } else if (!isCyrillic(u.middleName)) {
+    errors.value.middleName = 'Отчество должно быть на кириллице'
+    valid = false
+  }
+
+  // Email
+  if (!u.email) {
+    errors.value.email = 'Введите email'
+    valid = false
+  } else if (!isValidEmail(u.email)) {
+    errors.value.email = 'Неверный формат email'
+    valid = false
+  }
+
+  // Пароль
+  if (!u.password) {
+    errors.value.password = 'Введите пароль'
+    valid = false
+  }
+
+  // Подтверждение пароля
+  if (!u.confirmPassword) {
+    errors.value.confirmPassword = 'Подтвердите пароль'
+    valid = false
+  } else if (u.password !== u.confirmPassword) {
+    errors.value.confirmPassword = 'Пароли не совпадают'
+    valid = false
+  }
+
+  return valid
+}
 
 function handleRegister() {
   error.value = ''
-
-  const users = JSON.parse(localStorage.getItem('users') || '[]')
-
   if (!agreement.value) {
     error.value = 'Вы должны согласиться на обработку персональных данных'
     emit('register-error', error.value)
     return
   }
 
-  if (users.find(u => u.login === user.value.login)) {
-    error.value = 'Пользователь с таким логином уже существует'
-    emit('register-error', error.value)
-    return
-  }
-
-  if (user.value.password !== user.value.confirmPassword) {
-    error.value = 'Пароли не совпадают'
-    emit('register-error', error.value)
+  if (!validate()) {
+    emit('register-error', 'Ошибка валидации')
     return
   }
 
@@ -49,6 +141,7 @@ function handleRegister() {
     role: 'user',
   }
 
+  const users = JSON.parse(localStorage.getItem('users') || '[]')
   users.push(newUser)
   localStorage.setItem('users', JSON.stringify(users))
   localStorage.setItem('currentUser', JSON.stringify(newUser))
@@ -57,43 +150,65 @@ function handleRegister() {
 }
 </script>
 
+
 <template>
   <div class="form">
     <h2>Регистрация</h2>
 
     <div class="form-group">
       <label for="login">Логин</label>
+      <div class="input-wrapper">
       <input id="login" v-model="user.login" placeholder="Введите логин" />
+      <span class="field-error" v-if="errors.login">{{ errors.login }}</span>
+    </div>
     </div>
 
     <div class="form-group">
       <label for="lastName">Фамилия</label>
+      <div class="input-wrapper">
       <input id="lastName" v-model="user.lastName" placeholder="Иванова" />
+      <span class="field-error" v-if="errors.lastName">{{ errors.lastName }}</span>
+    </div>
     </div>
 
     <div class="form-group">
       <label for="firstName">Имя</label>
+      <div class="input-wrapper">
       <input id="firstName" v-model="user.firstName" placeholder="Иван" />
+      <span class="field-error" v-if="errors.firstName">{{ errors.firstName }}</span>
+    </div>
     </div>
 
     <div class="form-group">
       <label for="middleName">Отчество</label>
+      <div class="input-wrapper">
       <input id="middleName" v-model="user.middleName" placeholder="Иванович" />
+      <span class="field-error" v-if="errors.middleName">{{ errors.middleName }}</span>
+    </div>
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
+      <div class="input-wrapper">
       <input id="email" v-model="user.email" placeholder="ivanov@email.ru" />
+      <span class="field-error" v-if="errors.email">{{ errors.email }}</span>
+    </div>
     </div>
 
     <div class="form-group">
       <label for="password">Пароль</label>
+      <div class="input-wrapper">
       <input id="password" v-model="user.password" type="password" placeholder="Введите пароль" />
+      <span class="field-error" v-if="errors.password">{{ errors.password }}</span>
+    </div>
     </div>
 
     <div class="form-group">
       <label for="confirmPassword">Повторите пароль</label>
+      <div class="input-wrapper">
       <input id="confirmPassword" v-model="user.confirmPassword" type="password" placeholder="Повторите пароль" />
+      <span class="field-error" v-if="errors.confirmPassword">{{ errors.confirmPassword }}</span>
+      </div>
     </div>
 
     <label class="agreement">
@@ -109,6 +224,20 @@ function handleRegister() {
 
 
 <style scoped>
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* столько же, сколько ширина input */
+}
+
+.field-error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+  width: 100%;
+}
+
 .form {
   flex-direction: column;
   display: flex;
@@ -205,6 +334,50 @@ button:disabled {
 
   /* Небольшой «хак», чтобы фон не мигал */
   transition: background-color 9999s ease-in-out 0s;
+}
+
+/* === Адаптивность для мобильных === */
+@media (max-width: 600px) {
+  .form {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 12px;
+  }
+
+  .form-group label {
+    width: 100%;
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .input-wrapper {
+    width: 100%;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+  }
+
+  .agreement {
+    margin-left: 0;
+    font-size: 13px;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  button {
+    margin-left: 0;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+  }
 }
 
 </style>
